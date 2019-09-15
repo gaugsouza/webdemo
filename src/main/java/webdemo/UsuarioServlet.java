@@ -1,4 +1,4 @@
-package org.gradle.demo;
+package webdemo;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -15,13 +15,23 @@ public class UsuarioServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         ArrayList<Usuario> usuarios =  UsuariosRepository.getUsuarios();        
-        if(request.getParameter("id") == null){            
+        String httpMethod = request.getParameter("method");
+
+        if(Integer.valueOf(request.getParameter("id")) != null){
+            Integer id = Integer.valueOf(request.getParameter("id"));            
+            if(httpMethod.equals("GET")){
+                request.setAttribute("usuario", usuarios.get(id - 1));
+                request.getRequestDispatcher("usuario.jsp").forward(request, response);             
+            } else if(httpMethod.equals("PUT")) {
+                usuarios = this.listUpdate(id, usuarios, request);
+                request.setAttribute("usuarios", usuarios);
+                request.getRequestDispatcher("lista_usuario.jsp").forward(request, response); 
+            } else if(httpMethod.equals("DELETE")){
+    
+            }
+        } else {
             request.setAttribute("usuarios", usuarios);
             request.getRequestDispatcher("lista_usuario.jsp").forward(request, response); 
-        } else{
-            Integer id = Integer.valueOf(request.getParameter("id"));
-            request.setAttribute("usuario", usuarios.get(id - 1));
-            request.getRequestDispatcher("usuario.jsp").forward(request, response); 
         }
     }
 
@@ -35,5 +45,15 @@ public class UsuarioServlet extends HttpServlet {
         UsuariosRepository.addUsuario(new Usuario(id, nome, sobrenome));        
         request.setAttribute("usuarios", usuarios);
         request.getRequestDispatcher("lista_usuario.jsp").forward(request, response); 
+    }
+
+    private ArrayList<Usuario> listUpdate(Integer id, ArrayList<Usuario> usuarios, HttpServletRequest request){
+        String novoNome = request.getParameter("nome");
+        String novoSobrenome = request.getParameter("sobrenome");
+
+        usuarios.get(id - 1).setNome(novoNome);
+        usuarios.get(id - 1).setSobrenome(novoSobrenome);
+
+        return usuarios;
     }
 }

@@ -13,7 +13,9 @@
                     <c:forEach var="usuario" items="${usuarios}">
                         <li>
                             ${usuario.id}, ${usuario.nome}&nbsp;${usuario.sobrenome}
-                            <a href="usuario?id=${usuario.id}">Detalhar</a>
+                            <a href="usuario?method='GET'&id=${usuario.id}">Detalhar</a> / 
+                            <a href="usuario?method='PUT'&id=${usuario.id}">Atualizar</a> / 
+                            <a href="usuario?method='DELETE'&id=${usuario.id}">Deletar</a>
                         </li>
                         
                     </c:forEach>
