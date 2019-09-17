@@ -11,13 +11,14 @@
                 <h2>Lista</h2>
                 <ul style="display: inline;">
                     <c:forEach var="usuario" items="${usuarios}">
-                        <li>
-                            ${usuario.id}, ${usuario.nome}&nbsp;${usuario.sobrenome}
-                            <a href="usuario?method='GET'&id=${usuario.id}">Detalhar</a> / 
-                            <a href="usuario?method='PUT'&id=${usuario.id}">Atualizar</a> / 
-                            <a href="usuario?method='DELETE'&id=${usuario.id}">Deletar</a>
-                        </li>
-                        
+                        <c:if test="${usuario.ativo} == true">
+                            <li>
+                                ${usuario.id}, ${usuario.nome}&nbsp;${usuario.sobrenome}
+                                <a href="usuario?method='GET'&id=${usuario.id}">Detalhar</a> / 
+                                <a href="usuario?method='PUT'&id=${usuario.id}">Atualizar</a> / 
+                                <a href="usuario?method='DELETE'&id=${usuario.id}">Deletar</a>
+                            </li>
+                        </c:if>
                     </c:forEach>
                 </ul>
             </div>

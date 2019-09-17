@@ -6,11 +6,13 @@ public class Usuario{
     private Integer id;
 	private String nome;
 	private String sobrenome;
+	private boolean ativo;
     	
 	public Usuario(Integer id, String nome, String sobrenome) {
         this.id = id;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
+		this.ativo = true;
 	}
     public Integer getId() {
 		return id;
@@ -29,5 +31,11 @@ public class Usuario{
 	}
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
+	}
+	public boolean getAtivo(){
+		return this.ativo;
+	}
+	public void setAtivo(boolean ativo){
+		this.ativo = ativo;
 	}
 }

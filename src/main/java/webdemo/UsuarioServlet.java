@@ -26,11 +26,11 @@ public class UsuarioServlet extends HttpServlet {
                 request.setAttribute("usuario", usuarios.get(id - 1));
                 request.getRequestDispatcher("atualiza_usuario.jsp").forward(request, response); 
             } else if(httpMethod.equals("DELETE")){
-    
+                usuarios.get(id-1).setAtivo(false);
+                this.returnHome(request, response, usuarios);
             }
         } else {
-            request.setAttribute("usuarios", usuarios);
-            request.getRequestDispatcher("lista_usuario.jsp").forward(request, response); 
+            this.returnHome(request, response, usuarios);
         }
     }
 
@@ -42,6 +42,12 @@ public class UsuarioServlet extends HttpServlet {
         Integer id = (usuarios.get(usuarios.size() - 1)).getId() + 1;
         
         UsuariosRepository.addUsuario(new Usuario(id, nome, sobrenome));        
+        request.setAttribute("usuarios", usuarios);
+        request.getRequestDispatcher("lista_usuario.jsp").forward(request, response); 
+    }
+
+    private void returnHome(HttpServletRequest request, HttpServletResponse response, ArrayList<Usuario> usuarios)
+            throws ServletException, IOException {
         request.setAttribute("usuarios", usuarios);
         request.getRequestDispatcher("lista_usuario.jsp").forward(request, response); 
     }
