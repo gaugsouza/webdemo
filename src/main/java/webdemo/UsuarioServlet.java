@@ -23,9 +23,8 @@ public class UsuarioServlet extends HttpServlet {
                 request.setAttribute("usuario", usuarios.get(id - 1));
                 request.getRequestDispatcher("usuario.jsp").forward(request, response);             
             } else if(httpMethod.equals("PUT")) {
-                usuarios = this.listUpdate(id, usuarios, request);
-                request.setAttribute("usuarios", usuarios);
-                request.getRequestDispatcher("lista_usuario.jsp").forward(request, response); 
+                request.setAttribute("usuario", usuarios.get(id - 1));
+                request.getRequestDispatcher("atualiza_usuario.jsp").forward(request, response); 
             } else if(httpMethod.equals("DELETE")){
     
             }
@@ -45,15 +44,5 @@ public class UsuarioServlet extends HttpServlet {
         UsuariosRepository.addUsuario(new Usuario(id, nome, sobrenome));        
         request.setAttribute("usuarios", usuarios);
         request.getRequestDispatcher("lista_usuario.jsp").forward(request, response); 
-    }
-
-    private ArrayList<Usuario> listUpdate(Integer id, ArrayList<Usuario> usuarios, HttpServletRequest request){
-        String novoNome = request.getParameter("nome");
-        String novoSobrenome = request.getParameter("sobrenome");
-
-        usuarios.get(id - 1).setNome(novoNome);
-        usuarios.get(id - 1).setSobrenome(novoSobrenome);
-
-        return usuarios;
     }
 }

@@ -10,3 +10,14 @@ ul{
 .topic{
     font-weight: bold;
 }
+.updateContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 30vh;
+}
+.updateTitle{
+    text-align: center;
+    margin: 0;
+}
