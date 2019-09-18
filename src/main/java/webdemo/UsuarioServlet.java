@@ -14,10 +14,10 @@ import webdemo.entidades.UsuariosRepository;
 public class UsuarioServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        ArrayList<Usuario> usuarios =  UsuariosRepository.getUsuarios();        
+        ArrayList<Usuario> usuarios =  UsuariosRepository.getUsuarios();    
         String httpMethod = request.getParameter("method");
 
-        if(Integer.valueOf(request.getParameter("id")) != null){
+        if(request.getParameter("id") != null){
             Integer id = Integer.valueOf(request.getParameter("id"));            
             if(httpMethod.equals("GET")){
                 request.setAttribute("usuario", usuarios.get(id - 1));
@@ -27,6 +27,8 @@ public class UsuarioServlet extends HttpServlet {
                 request.getRequestDispatcher("atualiza_usuario.jsp").forward(request, response); 
             } else if(httpMethod.equals("DELETE")){
                 usuarios.get(id-1).setAtivo(false);
+                this.returnHome(request, response, usuarios);
+            } else{
                 this.returnHome(request, response, usuarios);
             }
         } else {
